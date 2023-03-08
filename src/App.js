@@ -13,14 +13,14 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Your PAT (Personal Access Token) can be found in the portal under Authentification
-const PAT = process.env.PAT;
+const PAT = process.env.REACT_APP_PAT;
 // Specify the correct user_id/app_id pairings
 // Since you're making inferences outside your app's scope
-const USER_ID = process.env.USER_ID;
-const APP_ID = process.env.APP_ID;
+const USER_ID = process.env.REACT_APP_USER_ID;
+const APP_ID = process.env.REACT_APP_APP_ID;
 // Change these to whatever model and image URL you want to use
-const MODEL_ID = process.env.MODEL_ID;
-const MODEL_VERSION_ID = process.env.MODEL_VERSION_ID;
+const MODEL_ID = process.env.REACT_APP_MODEL_ID;
+const MODEL_VERSION_ID = process.env.REACT_APP_MODEL_VERSION_ID;
 
 function App() {
   const [input, setInput] = React.useState(null);
