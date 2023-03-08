@@ -6,6 +6,8 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import ParticlesBg from "particles-bg";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // In this section, we set the user authentication, user and app ID, model details, and the URL
@@ -26,6 +28,9 @@ function App() {
   const [input, setInput] = React.useState(null);
   const [image, setImage] = React.useState("");
   const [box, setBox] = React.useState(null);
+  const [route, setRoute] = React.useState("signin");
+  const [isSignedIn, setIsSignedIn] = React.useState(false);
+
   const raw = JSON.stringify({
     user_app_id: {
       user_id: USER_ID,
@@ -41,6 +46,7 @@ function App() {
       },
     ],
   });
+
   const requestOptions = {
     method: "POST",
     headers: {
@@ -49,6 +55,7 @@ function App() {
     },
     body: raw,
   };
+
   const onInputChanges = (e) => {
     setInput(e.target.value);
   };
@@ -75,8 +82,6 @@ function App() {
     const width = Number(image.width);
     const height = Number(image.height);
 
-    console.log(width, height);
-
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -89,17 +94,34 @@ function App() {
     setBox(box);
   };
 
+  const onRouteChange = (route) => {
+    if (route === "signout") {
+      setIsSignedIn(false);
+    } else if (route === "home") {
+      setIsSignedIn(true);
+    }
+    setRoute(route);
+  };
+
   return (
     <div className="App">
-      <ParticlesBg num={1} type="balls" bg={true} />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm
-        onInputChanges={onInputChanges}
-        onButtonSubmit={onButtonSubmit}
-      />
-      <FaceRecognition imageUrl={image} box={box} />
+      <ParticlesBg num={1} type="ramdom" bg={true} />
+      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+      {route === "home" ? (
+        <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm
+            onInputChanges={onInputChanges}
+            onButtonSubmit={onButtonSubmit}
+          />
+          <FaceRecognition imageUrl={image} box={box} />
+        </>
+      ) : route === "signin" ? (
+        <Signin onRouteChange={onRouteChange} />
+      ) : (
+        <Register onRouteChange={onRouteChange} />
+      )}
     </div>
   );
 }
