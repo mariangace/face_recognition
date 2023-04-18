@@ -1,6 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Signin({ onRouteChange }) {
+import { User } from "../../models/User";
+import { signin } from "../../api/Auth";
+
+type SigninProps = {
+  onRouteChange: (route: string) => void;
+  loadUser: (user: User) => void;
+};
+
+function Signin({ onRouteChange, loadUser }: SigninProps) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const onSignin = async () => {
+    try {
+      const user = await signin({ email, password });
+      if (user) {
+        loadUser(user);
+        onRouteChange("home");
+      }
+    } catch (error) {
+      //handle error
+      setError(String(error));
+    }
+    // fetch("http://localhost:4000/signin", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     email,
+    //     password,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((user) => {
+    //     if (user) {
+    //       loadUser(user);
+    //       onRouteChange("home");
+    //     }
+    //   });
+  };
+
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l shadow-5 center">
       <main className="pa4 black-80">
@@ -16,6 +64,7 @@ function Signin({ onRouteChange }) {
                 type="email"
                 name="email-address"
                 id="email-address"
+                onChange={onEmailChange}
               />
             </div>
             <div className="mv3">
@@ -27,12 +76,16 @@ function Signin({ onRouteChange }) {
                 type="password"
                 name="password"
                 id="password"
+                onChange={onPasswordChange}
               />
+              {error && (
+                <label className="db fw6 lh-copy f6 red">{error}</label>
+              )}
             </div>
           </fieldset>
           <div className="">
             <input
-              onClick={() => onRouteChange("home")}
+              onClick={onSignin}
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Sign in"

@@ -1,11 +1,16 @@
 import React from "react";
 import "./ImageLinkForm.css";
 
-function ImageLinkForm({ onInputChanges, onButtonSubmit }) {
+type ImageLinkFormProps = {
+  onInputChanges: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onButtonSubmit: () => void;
+};
+
+function ImageLinkForm({ onInputChanges, onButtonSubmit }: ImageLinkFormProps) {
   return (
     <div>
       <p className="f3">
-        This Magic Brain will detect faces in your pictures. Give it a try
+        This input will detect faces in your pictures. Give it a try.
       </p>
       <div className="center">
         <div className="form center pa4 br3 shadow-5">
