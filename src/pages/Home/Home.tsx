@@ -45,7 +45,7 @@ function Home({ loadUser, user }: HomeProps) {
       const height = Number(imageRef.current?.height);
 
       displayFaceBox(calculateFaceLocation(res, width, height));
-      console.log(res);
+
       newEntry();
     } catch (error) {
       //handle error

@@ -20,9 +20,7 @@ describe("Api", () => {
       expect(response).toEqual({ some: "response" });
 
       const [firstArg, secondArg] = global.fetch.mock.calls[0];
-      expect(firstArg).toEqual(
-        "http://example.net/v1/auth/account_status?some=info"
-      );
+      expect(firstArg).toEqual("http://example.net/signin");
       expect(secondArg.method).toEqual("POST");
       expect(secondArg.headers).toEqual({
         "Content-Type": "application/json; charset=utf-8",

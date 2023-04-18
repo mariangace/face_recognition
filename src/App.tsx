@@ -14,12 +14,7 @@ function App() {
   const [route, setRoute] = useState("signin");
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const [user, setUser] = useState<User>({
-    id: "",
-    name: "",
-    email: "",
-    entries: 0,
-  });
+  const [user, setUser] = useState<User | null>(null);
 
   const onRouteChange = (route: string) => {
     if (route === "signout") {
@@ -37,7 +32,7 @@ function App() {
     <div className="App">
       <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
       {route === "home" ? (
-        <Home user={user} loadUser={loadUser} />
+        user && <Home user={user} loadUser={loadUser} />
       ) : route === "signin" ? (
         <Signin loadUser={loadUser} onRouteChange={onRouteChange} />
       ) : (

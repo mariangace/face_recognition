@@ -32,21 +32,6 @@ function Signin({ onRouteChange, loadUser }: SigninProps) {
       //handle error
       setError(String(error));
     }
-    // fetch("http://localhost:4000/signin", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     email,
-    //     password,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((user) => {
-    //     if (user) {
-    //       loadUser(user);
-    //       onRouteChange("home");
-    //     }
-    //   });
   };
 
   return (
